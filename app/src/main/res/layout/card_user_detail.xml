@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    style="@style/YourCardView"
+    android:id="@+id/card_user_detail"
+    android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Media -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+.
+                    <!-- Title, secondary and supporting text -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="100dp"
+                        android:layout_gravity="center"
+                    android:layout_height="100dp"
+android:src="@mipmap/ic_launcher_round"
+
+                    android:layout_margin="10dp"
+                    style="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                    />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/gotham"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aman"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        />
+
+
+                </LinearLayout>
+
+
+
+            <!-- Buttons -->
+
+
+        </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

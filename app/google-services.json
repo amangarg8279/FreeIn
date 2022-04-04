@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "820876564458",
+    "project_id": "freein-74763",
+    "storage_bucket": "freein-74763.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820876564458:android:969fed16bca4b88f984493",
+        "android_client_info": {
+          "package_name": "com.aman.freein"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820876564458-8are9ucub2qeitm1tn05qgce765cqkp8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKpFE29LdV6fuFDu73xLK-14i51Z0QvRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820876564458-8are9ucub2qeitm1tn05qgce765cqkp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

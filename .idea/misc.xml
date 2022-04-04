@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/buttonshap.xml" value="0.1" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/buttonshape.xml" value="0.173" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/card_user_details.xml" value="0.173" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/green_outline.xml" value="0.1" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.2505" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.2505" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1485" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/ic_baseline_wifi_24.xml" value="0.1485" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/item_state.xml" value="0.1" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_home_page.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_otp_phone_number.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_phone_number.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/card_user_detail.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/card_user_details.xml" value="0.1265625" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/card_view_userdetails.xml" value="0.1" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/item_state.xml" value="1.0" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/layout_back.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/menu/bottom_app_bar.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/menu/otp_top_app_bar.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/menu/top_app_bar.xml" value="0.27447916666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
