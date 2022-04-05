@@ -17,8 +17,11 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +31,8 @@ public class otp_phone_numberActivity extends AppCompatActivity {
     TextView message, Resend_otp, changeNumber;
     Button verify;
     private String phoneNumber, getotp;
+    FirebaseFirestore firebaseFirestore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class otp_phone_numberActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
         changeNumber = findViewById(R.id.changeNumber);
         Resend_otp = findViewById(R.id.resend_otp);
+
         verify = findViewById(R.id.verify);
         otp1 = findViewById(R.id.otp_box_1);
         otp2 = findViewById(R.id.otp_box_2);
@@ -44,6 +50,8 @@ public class otp_phone_numberActivity extends AppCompatActivity {
         otp4 = findViewById(R.id.otp_box_4);
         otp5 = findViewById(R.id.otp_box_5);
         otp6 = findViewById(R.id.otp_box_6);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         phoneNumber = String.format("+91-%s", getIntent().getStringExtra("MobileNumber"));
         getotp = getIntent().getStringExtra("OTP");
 
@@ -146,11 +154,7 @@ public class otp_phone_numberActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                LinearProgressIndicator.setVisibility(View.INVISIBLE);
-                                Intent i = new Intent(otp_phone_numberActivity.this, MainActivity.class);
-                                i.putExtra("MobileNumber", phoneNumber);
-                                onBackPressed();
-                                startActivity(i);
+                                check_user_exist_and_data_save();
                             } else {
                                 changeNumber.setEnabled(true);
                                 otp2.setEnabled(true);
@@ -176,4 +180,31 @@ public class otp_phone_numberActivity extends AppCompatActivity {
 
 
     }
+
+    private void check_user_exist_and_data_save() {
+
+        firebaseFirestore.collection("users").document(phoneNumber).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.getResult().exists()) {
+                    LinearProgressIndicator.setVisibility(View.INVISIBLE);
+                    Intent i = new Intent(otp_phone_numberActivity.this, HomePageActivity.class);
+                    i.putExtra("MobileNumber", phoneNumber);
+                    onBackPressed();
+                    Toast.makeText(otp_phone_numberActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                    startActivity(i);
+
+                } else {
+                    LinearProgressIndicator.setVisibility(View.INVISIBLE);
+                    Intent i = new Intent(otp_phone_numberActivity.this, MainActivity.class);
+                    i.putExtra("MobileNumber", phoneNumber);
+                    onBackPressed();
+                    startActivity(i);
+                }
+            }
+        });
+
+    }
+
+
 }

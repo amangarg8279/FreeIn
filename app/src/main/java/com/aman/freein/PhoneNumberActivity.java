@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -27,9 +28,10 @@ public class PhoneNumberActivity extends AppCompatActivity {
     LinearProgressIndicator LinearProgressIndicator;
     TextInputEditText Phone_Number;
     Button Generate_otp;
-    TextView try_again ;
+    TextView try_again;
     TextInputLayout PhoneNumberLayout;
     String OTPid;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,10 @@ public class PhoneNumberActivity extends AppCompatActivity {
         Phone_Number = findViewById(R.id.mobile_number);
         Generate_otp = findViewById(R.id.generate_otp);
         PhoneNumberLayout = findViewById(R.id.phoneNumber_layout);
-        LinearProgressIndicator=findViewById(R.id.progress_otp_send);
-        mAuth=FirebaseAuth.getInstance();
-        try_again=findViewById(R.id.try_again);
+        firebaseAuth = FirebaseAuth.getInstance();
+        LinearProgressIndicator = findViewById(R.id.progress_otp_send);
+        mAuth = FirebaseAuth.getInstance();
+        try_again = findViewById(R.id.try_again);
 
         findViewById(R.id.generate_otp).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,30 +78,42 @@ public class PhoneNumberActivity extends AppCompatActivity {
     }
 
     private void OTpSend(String PhoneNumber) {
-   PhoneAuthProvider.getInstance().verifyPhoneNumber("+91" + PhoneNumber, 60, TimeUnit.SECONDS, this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-       @Override
-       public void onCodeSent(@NonNull String backendOtp, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-        OTPid=backendOtp;
-           LinearProgressIndicator.setVisibility(View.INVISIBLE);
-           Intent i = new Intent(PhoneNumberActivity.this, otp_phone_numberActivity.class);
-          i.putExtra("MobileNumber",PhoneNumber);
-          i.putExtra("OTP",backendOtp);
-           onBackPressed();
-           startActivity(i);
-           Toast.makeText(PhoneNumberActivity.this, "OTP sended", Toast.LENGTH_SHORT).show();
-       }
+        PhoneAuthProvider.getInstance().verifyPhoneNumber("+91" + PhoneNumber, 60, TimeUnit.SECONDS, this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onCodeSent(@NonNull String backendOtp, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                OTPid = backendOtp;
+                LinearProgressIndicator.setVisibility(View.INVISIBLE);
+                Intent i = new Intent(PhoneNumberActivity.this, otp_phone_numberActivity.class);
+                i.putExtra("MobileNumber", PhoneNumber);
+                i.putExtra("OTP", backendOtp);
+                onBackPressed();
+                startActivity(i);
+                Toast.makeText(PhoneNumberActivity.this, "OTP sended", Toast.LENGTH_SHORT).show();
+            }
 
-       @Override
-       public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
 
-       }
+            }
 
-       @Override
-       public void onVerificationFailed(@NonNull FirebaseException e) {
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
 
-       }
-   });
+            }
+        });
+    }
 
-
+    @Override
+    protected void onStart() {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            LinearProgressIndicator.setVisibility(View.VISIBLE);
+            Intent i = new Intent(PhoneNumberActivity.this, HomePageActivity.class);
+            //i.putExtra("MobileNumber", );
+            onBackPressed();
+            //Toast.makeText(otp_phone_numberActivity.this, "Details Saved Successfully", Toast.LENGTH_SHORT).show();
+            startActivity(i);
+        }
+        super.onStart();
     }
 }
