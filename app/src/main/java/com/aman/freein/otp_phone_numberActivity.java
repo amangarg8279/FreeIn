@@ -186,13 +186,13 @@ public class otp_phone_numberActivity extends AppCompatActivity {
 
     private void check_user_exist_and_data_save() {
 
-        firebaseFirestore.collection("users").document(phoneNumber).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("users").document("+91"+phoneNumber).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.getResult().exists()) {
                     LinearProgressIndicator.setVisibility(View.INVISIBLE);
                     Intent i = new Intent(otp_phone_numberActivity.this, HomePageActivity.class);
-                    i.putExtra("MobileNumber", phoneNumber);
+                    i.putExtra("MobileNumber", "+91"+phoneNumber);
                     onBackPressed();
                     Toast.makeText(otp_phone_numberActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
                     startActivity(i);

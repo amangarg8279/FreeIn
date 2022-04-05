@@ -42,7 +42,8 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    phone_Number.setText(documentSnapshot.getString("RewardPoint"));
+                    Long n=documentSnapshot.getLong("RewardPoint");
+                    phone_Number.setText(n.toString());
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

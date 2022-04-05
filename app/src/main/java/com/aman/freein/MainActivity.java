@@ -31,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
     LinearProgressIndicator LinearProgressIndicator_Main;
     private CoordinatorLayout Main_CoordinatorLayout;
     String phoneNumber;
-    TextInputLayout name_TextInputLayout, email_TextInputLayout, state_TextInputLayout, city_TextInputLayout,Promo_Code_layout;
+    TextInputLayout name_TextInputLayout, email_TextInputLayout, state_TextInputLayout, city_TextInputLayout, Promo_Code_layout;
     TextInputEditText Name, ContactNumber, Email, State, City, PromoCode;
     FirebaseFirestore firebaseFirestore;
-    boolean temp = false;
-    int Reward=0;
+    Long Reward, RewardCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         ContactNumber = findViewById(R.id.contactNumber);
         Email = findViewById(R.id.Email);
         State = findViewById(R.id.state);
+        Reward = Long.valueOf(0);
+        RewardCount = Long.valueOf(0);
         City = findViewById(R.id.city);
         PromoCode = findViewById(R.id.Promo_Code);
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -55,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
         state_TextInputLayout = findViewById(R.id.State_layout);
         city_TextInputLayout = findViewById(R.id.City_layout);
         Main_CoordinatorLayout = findViewById(R.id.Main_CoordinatorLayout);
-        Promo_Code_layout=findViewById(R.id.Promo_Code_layout);
+        Promo_Code_layout = findViewById(R.id.Promo_Code_layout);
         phoneNumber = getIntent().getStringExtra("MobileNumber");
         ContactNumber.setText(phoneNumber);
-
 
 
         findViewById(R.id.button_send).setOnClickListener(new View.OnClickListener() {
@@ -70,9 +70,8 @@ public class MainActivity extends AppCompatActivity {
                         || City.getText().toString().isEmpty() || City.getText().toString().trim().length() < 4
                 ) {
                     Snackbar.make(Main_CoordinatorLayout, "Please check entered fields, length must be more then 4 ", Snackbar.LENGTH_SHORT).show();
-                }
-                else {
-                    if(!PromoCode.getText().toString().trim().isEmpty()){
+                } else {
+                    if (!PromoCode.getText().toString().trim().isEmpty()) {
                         firebaseFirestore.collection("PromoCodes").document(PromoCode.getText().toString().trim()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -80,16 +79,12 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "Promo Code Applied", Toast.LENGTH_SHORT).show();
                                     GenreateReward(PromoCode.getText().toString().trim());
                                     createUserandPromoDatabase();
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(MainActivity.this, "Cannot determine the promocode", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                    }
-                    else
-                    {
+                    } else {
                         createUserandPromoDatabase();
                     }
 
@@ -104,17 +99,38 @@ public class MainActivity extends AppCompatActivity {
         firebaseFirestore.collection("PromoCodes").document(PromoCode).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                int temp_reward=0;
+                int temp_reward = 0;
                 if (documentSnapshot.exists()) {
-                  String user_promoPhoneNumber=documentSnapshot.getString("Contact Number");
-                    DocumentReference documentReference_reward  = firebaseFirestore.collection("users").document(user_promoPhoneNumber);
+                    String user_promoPhoneNumber = documentSnapshot.getString("Contact Number");
+                    DocumentReference documentReference_reward = firebaseFirestore.collection("users").document(user_promoPhoneNumber);
                     Map<String, Object> userReward = new HashMap<>();
                     documentReference_reward.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            userReward.put("RewardPoint", 10);
+                            Toast.makeText(MainActivity.this, documentSnapshot.getLong("RewardPoint").toString(), Toast.LENGTH_SHORT).show();
+                            Long rewardCount = documentSnapshot.getLong("RewardCount");
+                            if (rewardCount < 3) {
+                                userReward.put("RewardPoint", documentSnapshot.getLong("RewardPoint") + 10);
+                                userReward.put("RewardCount", documentSnapshot.getLong("RewardCount") + 1);
+                            } else {
+                                userReward.put("RewardPoint", documentSnapshot.getLong("RewardPoint") + 2);
+                                userReward.put("RewardCount", documentSnapshot.getLong("RewardCount") + 1);
+                            }
+
+                            documentReference_reward.update(userReward).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(MainActivity.this, "Reward updated", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MainActivity.this, "cant Reward updated" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
+
 
                 }
             }
@@ -135,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> user = new HashMap<>();
         user.put("FullName", Name.getText().toString().trim());
         user.put("Contact Number", phoneNumber);
-        user.put("RewardPoint",Reward);
+        user.put("RewardPoint", Reward);
+        user.put("RewardCount", RewardCount);
         user.put("Email", Email.getText().toString().trim());
         user.put("State", State.getText().toString().trim());
         user.put("City", City.getText().toString().trim());
@@ -165,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         DocumentReference documentReference = firebaseFirestore.collection("PromoCodes").document(myPromoCode);
         Map<String, Object> user = new HashMap<>();
         user.put("FullName", Name.getText().toString().trim());
-        user.put("Contact Number", phoneNumber);
+        user.put("Contact Number", "+91" + phoneNumber);
         user.put("Email", Email.getText().toString().trim());
         user.put("PromoCode", PromoCode.getText().toString().trim().toUpperCase(Locale.ROOT));
         user.put("MyPromoCode", myPromoCode.trim());
@@ -178,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "we can't genreated Promocode"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "we can't genreated Promocode" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
