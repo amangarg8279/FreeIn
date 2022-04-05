@@ -30,11 +30,13 @@ android:src="@mipmap/ic_launcher_round"
                     style="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
                     />
                     <TextView
+                        android:id="@+id/home_name"
                         android:layout_gravity="center"
                         android:fontFamily="@font/gotham"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Aman"
+                        android:text="0"
+                        android:maxLength="100"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         />
 

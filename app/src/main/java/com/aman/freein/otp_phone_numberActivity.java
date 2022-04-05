@@ -52,7 +52,7 @@ public class otp_phone_numberActivity extends AppCompatActivity {
         otp6 = findViewById(R.id.otp_box_6);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        phoneNumber = String.format("+91-%s", getIntent().getStringExtra("MobileNumber"));
+        phoneNumber = getIntent().getStringExtra("MobileNumber");
         getotp = getIntent().getStringExtra("OTP");
 
         verify.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +63,9 @@ public class otp_phone_numberActivity extends AppCompatActivity {
                         || otp4.getText().toString().trim().isEmpty() || otp5.getText().toString().trim().isEmpty() || otp6.getText().toString().trim().isEmpty()) {
                     message.setVisibility(View.VISIBLE);
                     message.setText("Please Check OTP");
+                    Toast.makeText(otp_phone_numberActivity.this,"Please check OTP bocks",Toast.LENGTH_LONG).show();
                 } else {
+                    changeNumber.setVisibility(View.INVISIBLE);
                     changeNumber.setEnabled(false);
                     otp1.setEnabled(false);
                     otp2.setEnabled(false);
@@ -156,7 +158,8 @@ public class otp_phone_numberActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 check_user_exist_and_data_save();
                             } else {
-                                changeNumber.setEnabled(true);
+                                changeNumber.setVisibility(View.INVISIBLE);
+                                otp1.setEnabled(true);
                                 otp2.setEnabled(true);
                                 otp3.setEnabled(true);
                                 otp4.setEnabled(true);

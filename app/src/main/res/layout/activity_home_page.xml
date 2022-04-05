@@ -36,10 +36,46 @@ android:layout_marginTop="15dp"
     android:layout_height="match_parent">
  <include layout="@layout/card_user_detail"/>
 
-        <include layout="@layout/card_user_detail"/>
-    <include layout="@layout/card_user_detail"/>
-    <include layout="@layout/card_user_detail"/>
-    <include layout="@layout/card_user_detail"/>
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/fullName_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Full Name"
+        app:boxStrokeColor="@color/orange"
+        app:endIconMode="clear_text"
+        app:errorEnabled="false"
+        app:hintTextColor="@color/orange"
+        app:startIconContentDescription="Enter your name please"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        app:startIconTint="@color/orange">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/medium_gray" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/gotham"
+        android:text="Submit"
+        android:textAllCaps="false"
+
+        android:textSize="16sp" />
+
 </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

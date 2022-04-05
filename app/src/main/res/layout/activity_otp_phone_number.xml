@@ -94,6 +94,7 @@
                             android:background="#f6f6f6">
 
                             <EditText
+
                                 android:id="@+id/otp_box_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
