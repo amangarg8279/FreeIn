@@ -14,16 +14,19 @@
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/ic_baseline_wifi_24.xml" value="0.1485" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/item_state.xml" value="0.1" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/logo_animated.xml" value="0.1195" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/drawable/reward_background.xml" value="0.185" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_flash_screen.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_home_page.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_listview.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_otp_phone_number.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/activity_phone_number.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/card_user_detail.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/card_user_details.xml" value="0.1265625" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/card_view_userdetails.xml" value="0.1" />
-        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/item_state.xml" value="1.0" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/item_state.xml" value="0.2" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/layout_back.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/layout/reward_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/menu/bottom_app_bar.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/menu/otp_top_app_bar.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Aman Garg/AndroidStudioProjects/FreeIn/app/src/main/res/menu/top_app_bar.xml" value="0.27447916666666666" />

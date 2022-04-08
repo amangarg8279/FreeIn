@@ -1,15 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    
 
+    <item android:id="@+id/Reward_item"
+        android:icon="@null"
+        android:title="0"
+        app:showAsAction="always" />
     <item
-        android:id="@+id/favorite"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="favorite"
-        android:contentDescription="content_description_favorite"
-        app:showAsAction="ifRoom" />
-
-
-
-
+        android:icon="@drawable/dollar"
+        android:title="InCoin"
+        app:showAsAction="always" />
 
 </menu>

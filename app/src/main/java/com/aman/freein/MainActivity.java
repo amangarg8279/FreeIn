@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     TextInputLayout name_TextInputLayout, email_TextInputLayout, state_TextInputLayout, city_TextInputLayout, Promo_Code_layout;
     TextInputEditText Name, ContactNumber, Email, State, City, PromoCode;
     FirebaseFirestore firebaseFirestore;
-    Long Reward, RewardCount;
+    Long Reward, RewardCount, PaymentReward, PaymentRewardCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         ContactNumber = findViewById(R.id.contactNumber);
         Email = findViewById(R.id.Email);
         State = findViewById(R.id.state);
-        Reward = Long.valueOf(0);
+        Reward = Long.valueOf(30);
         RewardCount = Long.valueOf(0);
+        PaymentReward = Long.valueOf(0);
+        PaymentRewardCount = Long.valueOf(0);
         City = findViewById(R.id.city);
         PromoCode = findViewById(R.id.Promo_Code);
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         Promo_Code_layout = findViewById(R.id.Promo_Code_layout);
         phoneNumber = getIntent().getStringExtra("MobileNumber");
         ContactNumber.setText(phoneNumber);
-
 
         findViewById(R.id.button_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,22 +100,23 @@ public class MainActivity extends AppCompatActivity {
         firebaseFirestore.collection("PromoCodes").document(PromoCode).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                int temp_reward = 0;
                 if (documentSnapshot.exists()) {
                     String user_promoPhoneNumber = documentSnapshot.getString("Contact Number");
                     DocumentReference documentReference_reward = firebaseFirestore.collection("users").document(user_promoPhoneNumber);
+                    DocumentReference documentReference_rewardShareData = firebaseFirestore.collection("RewardShareData").document(user_promoPhoneNumber);
                     Map<String, Object> userReward = new HashMap<>();
                     documentReference_reward.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Toast.makeText(MainActivity.this, documentSnapshot.getLong("RewardPoint").toString(), Toast.LENGTH_SHORT).show();
                             Long rewardCount = documentSnapshot.getLong("RewardCount");
                             if (rewardCount < 3) {
-                                userReward.put("RewardPoint", documentSnapshot.getLong("RewardPoint") + 10);
+                                userReward.put("RewardPoint", documentSnapshot.getLong("RewardPoint") + 12);
                                 userReward.put("RewardCount", documentSnapshot.getLong("RewardCount") + 1);
+                                updateRewardShareData(documentReference_rewardShareData);
                             } else {
-                                userReward.put("RewardPoint", documentSnapshot.getLong("RewardPoint") + 2);
+                                userReward.put("RewardPoint", documentSnapshot.getLong("RewardPoint") + 5);
                                 userReward.put("RewardCount", documentSnapshot.getLong("RewardCount") + 1);
+                                updateRewardShareData(documentReference_rewardShareData);
                             }
 
                             documentReference_reward.update(userReward).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -137,6 +139,56 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void updateRewardShareData(DocumentReference documentReference_rewardShareData) {
+documentReference_rewardShareData.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    @Override
+    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        Map<String, Object> userRewardShare = new HashMap<>();
+        if(task.getResult().exists()){
+            documentReference_rewardShareData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    Long PersonCount = documentSnapshot.getLong("PersonCount");
+                    userRewardShare.put("PersonCount", documentSnapshot.getLong("PersonCount")+Long.valueOf(1));
+                    userRewardShare.put("PersonNameCount"+(PersonCount+1),Name.getText().toString().trim());
+                    userRewardShare.put("PersonMobileCount"+(PersonCount+1), "+91"+phoneNumber);
+                    documentReference_rewardShareData.update(userRewardShare).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(MainActivity.this, "RewardStore updated", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, "cant RewardStore updated" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
+        else
+        {
+            userRewardShare.put("PersonCount", 1);
+            userRewardShare.put("PersonNameCount"+1,Name.getText().toString().trim());
+            userRewardShare.put("PersonMobileCount"+1, "+91"+phoneNumber );
+            documentReference_rewardShareData.set(userRewardShare).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(MainActivity.this, "RewardStore updated", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this, "cant RewardStore updated" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+});
+
+    }
+
     private void createUserandPromoDatabase() {
         name_TextInputLayout.setEnabled(false);
         email_TextInputLayout.setEnabled(false);
@@ -151,13 +203,16 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> user = new HashMap<>();
         user.put("FullName", Name.getText().toString().trim());
         user.put("Contact Number", phoneNumber);
-        user.put("RewardPoint", Reward);
-        user.put("RewardCount", RewardCount);
         user.put("Email", Email.getText().toString().trim());
         user.put("State", State.getText().toString().trim());
         user.put("City", City.getText().toString().trim());
         user.put("PromoCode", PromoCode.getText().toString().trim());
         user.put("MyPromoCode", myPromoCode.trim());
+        user.put("PaymentReward", PaymentReward);
+        user.put("PaymentRewardCount", PaymentRewardCount);
+        user.put("PaymentStatus", "Pending");
+        user.put("RewardPoint", Reward);
+        user.put("RewardCount", RewardCount);
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
