@@ -218,7 +218,7 @@ documentReference_rewardShareData.get().addOnCompleteListener(new OnCompleteList
             public void onSuccess(Void unused) {
                 LinearProgressIndicator_Main.setVisibility(View.INVISIBLE);
                 Intent i = new Intent(MainActivity.this, HomePageActivity.class);
-                i.putExtra("MobileNumber", phoneNumber);
+                i.putExtra("MobileNumber","+91"+ phoneNumber);
                 onBackPressed();
                 Toast.makeText(MainActivity.this, "Details Saved Successfully", Toast.LENGTH_SHORT).show();
                 startActivity(i);

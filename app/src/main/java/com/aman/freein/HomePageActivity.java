@@ -321,7 +321,7 @@ public class HomePageActivity extends AppCompatActivity implements PaymentResult
                             Long PersonCount = documentSnapshot.getLong("PersonPaymentCount");
                             userRewardShare.put("PersonPaymentCount", documentSnapshot.getLong("PersonPaymentCount")+Long.valueOf(1));
                             userRewardShare.put("PersonPaymentNameCount"+(PersonCount+1),   Name.getText().toString().trim());
-                            userRewardShare.put("PersonPaymentMobileCount"+(PersonCount+1), "+91"+phone_Number);
+                            userRewardShare.put("PersonPaymentMobileCount"+(PersonCount+1), "+91"+phone_Number.getText().toString().trim());
                             documentReference_PaymentShareData.update(userRewardShare).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -340,7 +340,7 @@ public class HomePageActivity extends AppCompatActivity implements PaymentResult
                 {
                     userRewardShare.put("PersonPaymentCount", 1);
                     userRewardShare.put("PersonPaymentNameCount"+1,Name.getText().toString().trim());
-                    userRewardShare.put("PersonPaymentMobileCount"+1, "+91"+phone_Number );
+                    userRewardShare.put("PersonPaymentMobileCount"+1, "+91"+phone_Number.getText().toString().trim() );
                     documentReference_PaymentShareData.set(userRewardShare).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
